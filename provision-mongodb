@@ -61,11 +61,11 @@ function install_python_dependencies(){
 function update_repo(){
   echo "Install MongoDB Enterprise Repository"
   # for 4.0.xx
-  sudo wget -qO - https://www.mongodb.org/static/pgp/server-4.0.asc | sudo apt-key add -
+  sudo wget -qO - https://www.mongodb.org/static/pgp/server-$MONGO_VERSION.asc | sudo apt-key add -
   # for 4.2.x
   # sudo wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
   # for 4.0.x
-  sudo echo "deb [ arch=amd64 ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
+  sudo echo "deb [ arch=amd64 ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/$MONGO_VERSION multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
   # for 4.2.2
   # sudo echo "deb [ arch=amd64 ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
   sudo apt-get update
@@ -87,7 +87,8 @@ function config(){
   # echo 'manual' | sudo tee /etc/init/mongod.override
 }
 
-
+MONGO_VERSION="${MONGO_VERSION:-4.2}"
+echo "Mongo Version: $MONGO_VERSION"
 config
 update_repo
 install_mongod

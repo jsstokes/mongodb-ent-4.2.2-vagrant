@@ -20,6 +20,7 @@ Vagrant.configure("2") do |config|
     end
     server.vm.hostname = "mongo40.mongodb.university"
     server.vm.network :private_network, ip: "192.168.14.100"
+    config.vm.provision "shell", inline: "echo 'export MONGO_VERSION=#{ENV['MONGO_VERSION']}' > /etc/profile.d/myvars.sh", run: "always"
     server.vm.provision :shell, path: "provision-mongodb", args: ENV['ARGS']
   end
 end
