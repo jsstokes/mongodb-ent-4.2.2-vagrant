@@ -1,0 +1,6 @@
+.DS_Store
+.vagrant/
+shared.zip
+shared/*
+data/*
+ubuntu-bionic-18.04-cloudimg-console.log
