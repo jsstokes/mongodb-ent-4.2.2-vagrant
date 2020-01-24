@@ -46,19 +46,28 @@ function install_mongod(){
 
 
 function install_python_dependencies(){
+    sudo echo "alias python=python3" >> /home/vagrant/.profile
+    source /home/vagrant/.profile
     sudo apt-get install -y python-dev
     sudo apt-get install -y python-pip
+    sudo apt install -y python3-pip
     sudo pip install pymongo
     sudo pip install docopt
     sudo pip install faker
     sudo pip install psutil
-    sudo pip install mtools
+    sudo pip3 install mtools[all]
 }
 
 function update_repo(){
   echo "Install MongoDB Enterprise Repository"
-  sudo wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-  sudo echo "deb [ arch=amd64 ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
+  # for 4.0.xx
+  sudo wget -qO - https://www.mongodb.org/static/pgp/server-4.0.asc | sudo apt-key add -
+  # for 4.2.x
+  # sudo wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+  # for 4.0.x
+  sudo echo "deb [ arch=amd64 ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
+  # for 4.2.2
+  # sudo echo "deb [ arch=amd64 ] http://repo.mongodb.com/apt/ubuntu bionic/mongodb-enterprise/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
   sudo apt-get update
   # echo "deb http://repo.mongodb.com/apt/ubuntu "$(lsb_release -sc)"/mongodb-enterprise/3.3 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-enterprise.list
   # sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6

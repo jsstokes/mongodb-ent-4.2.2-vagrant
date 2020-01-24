@@ -12,13 +12,13 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 30001, host: 30001
   config.vm.network "forwarded_port", guest: 30002, host: 30002
 
-  config.vm.define "m422" do |server|
+  config.vm.define "Mongo40" do |server|
     server.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
-      vb.name = "m422"
+      vb.name = "Mongo40"
       vb.memory = 4096
     end
-    server.vm.hostname = "m422.mongodb.university"
+    server.vm.hostname = "mongo40.mongodb.university"
     server.vm.network :private_network, ip: "192.168.14.100"
     server.vm.provision :shell, path: "provision-mongodb", args: ENV['ARGS']
   end
